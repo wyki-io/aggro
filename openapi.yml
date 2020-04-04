@@ -1,0 +1,727 @@
+openapi: 3.0.2
+info:
+  version: 0.1.0
+  title: Aggro
+  description: An API that allows you to retrieve aggregated IoT data
+  contact:
+    name: WYKI
+    email: contact@wyki.io
+  license:
+    name: MIT License
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: Asset
+  - name: Data
+paths:
+  /assets:
+    get:
+      summary: Returns a list of assets
+      operationId: listAssets
+      tags:
+        - Asset
+      parameters:
+        - $ref: '#/components/parameters/limitPerPage'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/tags'
+      responses:
+        200:
+          description: List of assets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AssetWithId'
+        default:
+          $ref: '#/components/responses/error'
+    post:
+      summary: Create an asset
+      operationId: createAsset
+      tags:
+        - Asset
+      requestBody:
+        $ref: '#/components/requestBodies/assetCreate'
+      responses:
+        201:
+          $ref: '#/components/responses/successfulCreate'
+        400:
+          $ref: '#/components/responses/badRequest'
+        409:
+          $ref: '#/components/responses/alreadyExists'
+        default:
+          $ref: '#/components/responses/error'
+  /assets/{id}:
+    parameters:
+      - $ref: '#/components/parameters/idPath'
+    put:
+      summary: Replace an asset
+      operationId: replaceAsset
+      tags:
+        - Asset
+      requestBody:
+        $ref: '#/components/requestBodies/assetCreate'
+      responses:
+        204:
+          $ref: '#/components/responses/successfulUpdate'
+        400:
+          $ref: '#/components/responses/badRequest'
+        404:
+          $ref: '#/components/responses/notFound'
+        default:
+          $ref: '#/components/responses/error'
+    patch:
+      summary: Update an asset
+      operationId: updateAsset
+      tags:
+        - Asset
+      requestBody:
+        $ref: '#/components/requestBodies/assetCreate'
+      responses:
+        204:
+          $ref: '#/components/responses/successfulUpdate'
+        400:
+          $ref: '#/components/responses/badRequest'
+        404:
+          $ref: '#/components/responses/notFound'
+        default:
+          $ref: '#/components/responses/error'
+    delete:
+      summary: Delete an asset
+      operationId: deleteAsset
+      description: |
+        Delete an asset
+
+        **NOTE THAT IT ALSO DELETES ALL LINKED DATA**
+      tags:
+        - Asset
+      responses:
+        204:
+          $ref: '#/components/responses/successfulUpdate'
+        404:
+          $ref: '#/components/responses/notFound'
+        default:
+          $ref: '#/components/responses/error'
+
+  /tags:
+    get:
+      summary: Returns a list of tags
+      operationId: listTags
+      tags:
+        - Asset
+      parameters:
+        - $ref: '#/components/parameters/limitPerPage'
+        - $ref: '#/components/parameters/pageNumber'
+      responses:
+        200:
+          description: List of tags
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TagWithId'
+        default:
+          $ref: '#/components/responses/error'
+    post:
+      summary: Creates a tag
+      operationId: createTag
+      tags:
+        - Asset
+      requestBody:
+        $ref: '#/components/requestBodies/tagCreate'
+      responses:
+        201:
+          $ref: '#/components/responses/successfulCreate'
+        400:
+          $ref: '#/components/responses/badRequest'
+        409:
+          $ref: '#/components/responses/alreadyExists'
+        default:
+          $ref: '#/components/responses/error'
+  /tags/{id}:
+    parameters:
+      - $ref: '#/components/parameters/idPath'
+    put:
+      summary: Replace a tag
+      operationId: replaceTag
+      tags:
+        - Asset
+      requestBody:
+        $ref: '#/components/requestBodies/tagCreate'
+      responses:
+        204:
+          $ref: '#/components/responses/successfulUpdate'
+        400:
+          $ref: '#/components/responses/badRequest'
+        404:
+          $ref: '#/components/responses/notFound'
+        default:
+          $ref: '#/components/responses/error'
+    patch:
+      summary: Update fields of a tag
+      operationId: updateTag
+      tags:
+        - Asset
+      requestBody:
+        $ref: '#/components/requestBodies/tagCreate'
+      responses:
+        204:
+          $ref: '#/components/responses/successfulUpdate'
+        400:
+          $ref: '#/components/responses/badRequest'
+        404:
+          $ref: '#/components/responses/notFound'
+        default:
+          $ref: '#/components/responses/error'
+    delete:
+      summary: Delete tag
+      operationId: deleteTag
+      tags:
+        - Asset
+      responses:
+        204:
+          $ref: '#/components/responses/successfulDelete'
+        404:
+          $ref: '#/components/responses/notFound'
+        default:
+          $ref: '#/components/responses/error'
+
+  /dataTypes:
+    get:
+      summary: Returns a list of data types
+      operationId: listDataTypes
+      tags:
+        - Data
+      parameters:
+        - $ref: '#/components/parameters/name'
+        - $ref: '#/components/parameters/unit'
+      responses:
+        200:
+          description: List of data types
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DataTypeWithId'
+    post:
+      summary: Create a data type
+      operationId: createDataType
+      tags:
+        - Data
+      requestBody:
+        $ref: '#/components/requestBodies/dataTypeCreate'
+      responses:
+        201:
+          $ref: '#/components/responses/successfulCreate'
+        400:
+          $ref: '#/components/responses/badRequest'
+        409:
+          $ref: '#/components/responses/alreadyExists'
+        default:
+          $ref: '#/components/responses/error'
+  /dataTypes/{id}:
+    parameters:
+      - $ref: '#/components/parameters/idPath'
+    patch:
+      summary: Update fields of a data type
+      operationId: updatedDataType
+      tags:
+        - Data
+      requestBody:
+        $ref: '#/components/requestBodies/dataTypeUpdate'
+      responses:
+        204:
+          $ref: '#/components/responses/successfulUpdate'
+        400:
+          $ref: '#/components/responses/badRequest'
+        404:
+          $ref: '#/components/responses/notFound'
+        default:
+          $ref: '#/components/responses/error'
+    delete:
+      summary: Delete data type
+      operationId: deleteDataType
+      description: |
+        Deletes a data type
+
+        **Note that all linked assets should already be deleted, else you will encounter a 409**
+      tags:
+        - Data
+      responses:
+        204:
+          $ref: '#/components/responses/successfulDelete'
+        404:
+          $ref: '#/components/responses/notFound'
+        409:
+          $ref: '#/components/responses/linkedResourceConflict'
+        default:
+          $ref: '#/components/responses/error'
+
+  /aggregations:
+    get:
+      summary: Returns a list of aggregations
+      operationId: listAggregations
+      description: The available aggregation are driven by the application version
+      tags:
+        - Data
+      responses:
+        200:
+          description: List of aggregations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AggregationType'
+
+  /assets/{id}/data/{dataType}:
+    parameters:
+      - $ref: '#/components/parameters/idPath'
+      - $ref: '#/components/parameters/dataTypePath'
+    get:
+      summary: Retrieve data from an asset
+      operationId: aggregateData
+      tags:
+        - Data
+      description: |
+        Interval  | Max Duration
+        15min-1h  | 1 day
+        1h-1month | 1 month
+      parameters:
+        - $ref: '#/components/parameters/startDate'
+        - $ref: '#/components/parameters/endDate'
+        - $ref: '#/components/parameters/timeInterval'
+        - $ref: '#/components/parameters/aggregationType'
+        - $ref: '#/components/parameters/pageNumber'
+      responses:
+        200:
+          description: List of data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetData'
+        400:
+          $ref: '#/components/responses/badRequest'
+        404:
+          $ref: '#/components/responses/notFound'
+        default:
+          $ref: '#/components/responses/error'
+  /assets/{id}/data:
+    parameters:
+      - $ref: '#/components/parameters/idPath'
+    post:
+      summary: Write data to an asset
+      operationId: writeData
+      tags:
+        - Data
+      description: |
+        Write data to an asset.  
+        If given data already exists with the given timestamp, it will override the existing data
+      requestBody:
+        $ref: '#/components/requestBodies/dataCreate'
+      responses:
+        201:
+          $ref: '#/components/responses/successfulCreate'
+        400:
+          $ref: '#/components/responses/badRequest'
+        404:
+          $ref: '#/components/responses/notFound'
+        default:
+          $ref: '#/components/responses/error'
+
+components:
+  parameters:
+    idPath:
+      name: id
+      in: path
+      description: |
+        The ID of a resource, in **UUID v4** format.
+        If the resource has a `name` attribute, it can be used in replacement of
+        the **UUID**.
+      required: true
+      schema:
+        type: string
+    dataTypePath:
+      name: dataType
+      in: path
+      description: The type of data to query
+      required: true
+      schema:
+        type: string
+
+    limitPerPage:
+      name: limit
+      in: query
+      description: The maximum number of result per page
+      required: false
+      schema:
+        type: integer
+        format: int32
+        maximum: 100
+        default: 25
+    pageNumber:
+      name: page
+      in: query
+      description: The page number to access
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        default: 1
+    unit:
+      name: unit
+      in: query
+      description: The unit type of the data type
+      required: false
+      schema:
+        type: string
+    name:
+      name: name
+      in: query
+      description: The name or part of the name of a resource, if it has one
+      required: false
+      schema:
+        type: string
+    tags:
+      name: tags
+      in: query
+      description: List of key / value pairs to filter assets
+      required: false
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/TagElement'
+
+    # Asset data query param
+    # dataTypes:
+    #   name: datatypes
+    #   in: query
+    #   description: List of data types to retrieve. Defaults to first data type in alphabetic order
+    #   required: false
+    #   schema:
+    #     type: array
+    #     items:
+    #       type: string
+    startDate:
+      name: start
+      in: query
+      description: |
+        The date at which to start aggregating data, as defined as `date-time` in RFC3339.
+        Defaults to **now() - 24h**
+
+        This value will always be floored on the hour.
+        Example : **2020-04-03T14:58:21Z** -> **2020-04-03T14:00:00Z**
+      required: false
+      schema:
+        type: string
+        format: date-time
+        example: '2020-04-03T14:00:00Z'
+    endDate:
+      name: end
+      in: query
+      description: |
+        The date at which to end aggregating data, as defined as `date-time` in RFC3339.
+        Defaults to **now()**
+
+        This value will always be floored on the hour.
+        Example : **2020-04-04T14:58:21Z** -> **2020-04-04T14:00:00Z**
+      required: false
+      schema:
+        type: string
+        format: date-time
+        example: '2020-04-04T14:00:00Z'
+    timeInterval:
+      name: interval
+      in: query
+      description: |
+        The time interval between each values.
+        Possible length modifier available :
+        - `m` for minutes (30m)
+        - `h` for hours (2h)
+        - `d` for days (1d)
+        - `M` for months (1M)
+
+        Minimum value : `1m`  
+        Maximum value : `1M`
+      required: false
+      schema:
+        type: string
+        default: 15m
+    aggregationType:
+      name: aggregation
+      in: query
+      description: The type of aggregation to use on data
+      required: false
+      schema:
+        type: string
+        default: AVERAGE
+
+  requestBodies:
+    tagCreate:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Tag'
+    assetCreate:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AssetCreate'
+    dataTypeCreate:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DataType'
+    dataTypeUpdate:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DataTypeWithoutName'
+    dataCreate:
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/AssetDataWrite'
+
+  responses:
+    # 201
+    successfulCreate:
+      description: Successfully created resource
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Id'
+    # 204
+    successfulUpdate:
+      description: Successfully updated resource
+    successfulDelete:
+      description: Successfully deleted resource
+    # 400
+    badRequest:
+      description: |
+        Error in body : malformed or missing resource
+    # 404
+    notFound:
+      description: Resource not found
+    # 409
+    alreadyExists:
+      description: Resource already exists
+    linkedResourceConflict:
+      description: This resource has link conflict with other resources
+
+    error:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+  schemas:
+    Asset:
+      type: object
+      properties:
+        name:
+          type: string
+          description: User defined name for the Asset. Must be unique
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/TagElement'
+        dataTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataType'
+    AssetCreate:
+      type: object
+      required:
+        - name
+        - dataTypes
+      properties:
+        name:
+          type: string
+          description: User defined name for the Asset. Must be unique
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/TagElement'
+        dataTypes:
+          type: array
+          items:
+            type: string
+            description: Data type name or ID
+    AssetWithId:
+      allOf:
+        - $ref: '#/components/schemas/Id'
+        - $ref: '#/components/schemas/Asset'
+
+    AssetData:
+      type: object
+      properties:
+        dataType:
+          type: string
+          description: The data type name
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        interval:
+          type: string
+        aggregation:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataByDate'
+        _links:
+          $ref: '#/components/schemas/AssetDataHateoasLinks'
+    AssetDataWrite:
+      type: object
+      properties:
+        dataType:
+          type: string
+          description: The data type name
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataByDate'
+    DataByDate:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+        value:
+          type: number
+          format: double
+
+    Tag:
+      type: object
+      required:
+        - name
+        - description
+      properties:
+        name:
+          type: string
+          description: The name of the Tag, unique
+        description:
+          type: string
+          description: The description of the Tag
+    TagWithId:
+      allOf:
+        - $ref: '#/components/schemas/Id'
+        - $ref: '#/components/schemas/Tag'
+    TagElement:
+      type: object
+      required:
+        - name
+        - value
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+
+    DataTypeWithoutName:
+      type: object
+      properties:
+        description:
+          type: string
+        unit:
+          type: string
+    DataType:
+      allOf:
+        - type: object
+          required:
+            - name
+          properties:
+            name:
+              type: string
+              description: The name of the data type, unique
+        - $ref: '#/components/schemas/DataTypeWithoutName'
+    DataTypeWithId:
+      allOf:
+        - $ref: '#/components/schemas/Id'
+        - $ref: '#/components/schemas/DataType'
+
+    AggregationType:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the aggregation type, unique
+        description:
+          type: string
+
+    Id:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Represent the ID of related object in this API
+          example: 'd74f8fab-b705-43c7-95e6-8f4639d099a3'
+    # Maker:
+    #   allOf:
+    #     - $ref: '#/components/schemas/Id'
+    #     - type: object
+    #       properties:
+    #         name:
+    #           type: string
+    # Model:
+    #   allOf:
+    #     - $ref: '#/components/schemas/Id'
+    #     - type: object
+    #       properties:
+    #         name:
+    #           type: string
+    #         maker:
+    #           $ref: '#/components/schemas/Maker'
+    # Serial:
+    #   type: object
+    #   properties:
+    #     serial:
+    #       type: string
+    #       description: As asset Serial
+    #       example: '5EC249'
+    # AssetType:
+    #   type: string
+    #   description: The type of an asset
+    #   example: WIND_TURBINE
+
+    AssetDataHateoasLinks:
+      type: object
+      required:
+        - self
+      properties:
+        self:
+          $ref: '#/components/schemas/HateoasLink'
+        previousPage:
+          $ref: '#/components/schemas/HateoasLink'
+        nextPage:
+          $ref: '#/components/schemas/HateoasLink'
+
+    HateoasLink:
+      type: object
+      required:
+        - href
+      properties:
+        href:
+          type: string
+
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

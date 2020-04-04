@@ -8,7 +8,7 @@
         <version>0.1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>aggro-app</artifactId>
+    <artifactId>app</artifactId>
     <version>0.1.0-SNAPSHOT</version>
 
     <dependencies>
@@ -47,4 +47,22 @@
             <artifactId>quarkus-jdbc-postgresql</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>net.revelc.code.formatter</groupId>
+                    <artifactId>formatter-maven-plugin</artifactId>
+                    <dependencies>
+                        <dependency>
+                            <groupId>io.wyki.aggro</groupId>
+                            <artifactId>build-tools</artifactId>
+                            <version>${project.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 </project>

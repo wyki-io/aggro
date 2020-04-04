@@ -9,7 +9,10 @@
     </parent>
 
     <artifactId>app</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+
+    <properties>
+        <generated-sources-base-package>${project.groupId}.${project.artifactId}.generated</generated-sources-base-package>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -64,5 +67,57 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>${openapi-generator-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>openapi-gen</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/META-INF/openapi.yml</inputSpec>
+                            <generatorName>jaxrs-spec</generatorName>
+                            <skipIfSpecIsUnchanged>true</skipIfSpecIsUnchanged>
+                            <configOptions>
+                                <serializableModel>false</serializableModel>
+                                <invokerPackage>${generated-sources-base-package}</invokerPackage>
+                                <modelPackage>${generated-sources-base-package}.model</modelPackage>
+                                <apiPackage>${generated-sources-base-package}.api</apiPackage>
+                                <library>quarkus</library>
+                                <dateLibrary>java8</dateLibrary>
+                                <interfaceOnly>true</interfaceOnly>
+                                <returnResponse>true</returnResponse>
+                                <useSwaggerAnnotations>false</useSwaggerAnnotations>
+                                <!-- <useBeanValidation>false</useBeanValidation> -->
+                            </configOptions>
+                            <!-- <templateDirectory>${project.basedir}/../buildtools/openapi-template</templateDirectory> -->
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>${build-helper-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/generated-sources/openapi/src/gen/java/</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 </project>

@@ -317,7 +317,7 @@ paths:
       tags:
         - Data
       description: |
-        Write data to an asset.  
+        Write data to an asset.
         If given data already exists with the given timestamp, it will override the existing data
       requestBody:
         $ref: '#/components/requestBodies/dataCreate'
@@ -444,7 +444,7 @@ components:
         - `d` for days (1d)
         - `M` for months (1M)
 
-        Minimum value : `1m`  
+        Minimum value : `1m`
         Maximum value : `1M`
       required: false
       schema:

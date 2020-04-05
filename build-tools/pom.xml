@@ -9,4 +9,6 @@
     </parent>
 
     <artifactId>build-tools</artifactId>
+
+    <description>Tools required for build, like Maven Formatter plugin, ...</description>
 </project>

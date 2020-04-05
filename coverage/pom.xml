@@ -12,6 +12,8 @@
     <artifactId>coverage</artifactId>
     <packaging>pom</packaging>
 
+    <description>Aggregate coverage reports</description>
+
     <properties>
         <coverage.project.folder>${basedir}/../</coverage.project.folder>
         <coverage.overall.data.folder>${basedir}/../target/aggregate.exec</coverage.overall.data.folder>

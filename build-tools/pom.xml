@@ -11,4 +11,8 @@
     <artifactId>build-tools</artifactId>
 
     <description>Tools required for build, like Maven Formatter plugin, ...</description>
+
+    <properties>
+        <maven.site.skip>true</maven.site.skip>
+    </properties>
 </project>

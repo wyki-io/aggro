@@ -17,6 +17,7 @@
     <properties>
         <coverage.project.folder>${basedir}/../</coverage.project.folder>
         <coverage.overall.data.folder>${basedir}/../target/aggregate.exec</coverage.overall.data.folder>
+        <maven.site.skip>true</maven.site.skip>
     </properties>
 
     <dependencies>
@@ -32,7 +33,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>${surefire-plugin.version}</version>
+                <version>${maven-surefire-plugin.version}</version>
                 <configuration>
                     <!-- Jacoco prepare-agent builds some command-line params without -->
                     <!-- which jacoco will not instrument. Hence it is important to add -->

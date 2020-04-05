@@ -3,6 +3,10 @@
 This project aims to store timeseries data and give them back on different time
 interval.
 
+## Spotbug
+
+You may need to first run `./mvnw install` before executing `./mvnw spotbugs:check`
+
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .

@@ -9,5 +9,4 @@
     </parent>
 
     <artifactId>build-tools</artifactId>
-<!--    <packaging>jar</packaging>-->
 </project>

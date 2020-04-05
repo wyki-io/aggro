@@ -6,6 +6,7 @@
         <groupId>io.wyki.aggro</groupId>
         <artifactId>aggro</artifactId>
         <version>0.1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>coverage</artifactId>
@@ -38,6 +39,7 @@
                     <forkCount>1</forkCount>
                     <runOrder>random</runOrder>
                 </configuration>
+
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
@@ -69,6 +71,7 @@
                         </configuration>
                     </execution>
                 </executions>
+
             </plugin>
         </plugins>
     </build>

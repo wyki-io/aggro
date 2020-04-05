@@ -23,7 +23,7 @@
         <jacoco.version>0.8.4</jacoco.version>
         <spotbug-maven-plugin.version>4.0.0</spotbug-maven-plugin.version>
         <maven-site-plugin.version>3.9.0</maven-site-plugin.version>
-<!--        <maven-project-info-reports-plugin.version>3.0.0</maven-project-info-reports-plugin.version>-->
+        <maven-project-info-reports-plugin.version>3.0.0</maven-project-info-reports-plugin.version>
 
         <!-- App -->
         <openapi-generator-maven-plugin.version>4.3.0</openapi-generator-maven-plugin.version>
@@ -58,13 +58,13 @@
     </dependencies>
 
     <build>
-<!--        <extensions>-->
-<!--            <extension>-->
-<!--                <groupId>io.wyki.aggro</groupId>-->
-<!--                <artifactId>build-tools</artifactId>-->
-<!--                <version>${project.version}</version>-->
-<!--            </extension>-->
-<!--        </extensions>-->
+        <extensions>
+            <extension>
+                <groupId>io.wyki.aggro</groupId>
+                <artifactId>build-tools</artifactId>
+                <version>${project.version}</version>
+            </extension>
+        </extensions>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -228,17 +228,24 @@
                 </configuration>
             </plugin>
             <!-- End Code Coverage -->
-            <!-- Site -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-site-plugin</artifactId>
-                <version>${maven-site-plugin.version}</version>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>4.0.0</version>
+                <dependencies>
+                    <!-- overwrite dependency on spotbugs if you want to specify the version of spotbugs -->
+                    <dependency>
+                        <groupId>com.github.spotbugs</groupId>
+                        <artifactId>spotbugs</artifactId>
+                        <version>4.0.1</version>
+                    </dependency>
+                </dependencies>
             </plugin>
-
+            <!-- Site -->
 <!--            <plugin>-->
 <!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-project-info-reports-plugin</artifactId>-->
-<!--                <version>${maven-project-info-reports-plugin.version}</version>-->
+<!--                <artifactId>maven-site-plugin</artifactId>-->
+<!--                <version>${maven-site-plugin.version}</version>-->
 <!--            </plugin>-->
             <!-- End Site -->
         </plugins>
@@ -278,22 +285,31 @@
         </profile>
     </profiles>
     <reporting>
-        <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-project-info-reports-plugin</artifactId>
-                    <version>3.0.0</version>
-                </plugin>
-            <plugin>
-                <groupId>com.github.spotbugs</groupId>
-                <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>${spotbug-maven-plugin.version}</version>
-<!--                <configuration>-->
-<!--                    <effort>Max</effort>-->
-<!--                    <threshold>Low</threshold>-->
-<!--                    <includeFilterFile>whizbang/lib-filter.xml</includeFilterFile>-->
-<!--                </configuration>-->
-            </plugin>
-        </plugins>
+<!--        <plugins>-->
+<!--                <plugin>-->
+<!--                    <groupId>org.apache.maven.plugins</groupId>-->
+<!--                    <artifactId>maven-project-info-reports-plugin</artifactId>-->
+<!--                    <version>3.0.0</version>-->
+<!--                </plugin>-->
+<!--            <plugin>-->
+<!--                <groupId>com.github.spotbugs</groupId>-->
+<!--                <artifactId>spotbugs-maven-plugin</artifactId>-->
+<!--                <version>${spotbug-maven-plugin.version}</version>-->
+<!--&lt;!&ndash;                <configuration>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <effort>Max</effort>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <threshold>Low</threshold>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <includeFilterFile>whizbang/lib-filter.xml</includeFilterFile>&ndash;&gt;-->
+<!--&lt;!&ndash;                </configuration>&ndash;&gt;-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--        <plugins>-->
+
+
+<!--        <plugin>-->
+<!--            <groupId>org.apache.maven.plugins</groupId>-->
+<!--            <artifactId>maven-project-info-reports-plugin</artifactId>-->
+<!--            <version>${maven-project-info-reports-plugin.version}</version>-->
+<!--        </plugin>-->
+<!--        </plugins>-->
     </reporting>
 </project>

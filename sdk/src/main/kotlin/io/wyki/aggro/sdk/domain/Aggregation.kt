@@ -1,4 +1,4 @@
-package io.wyki.aggro.sdk.types
+package io.wyki.aggro.sdk.domain
 
 enum class Aggregation(val description: String) {
     AVERAGE("Aggregate values on an average basis"),

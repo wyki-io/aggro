@@ -2,8 +2,7 @@ package io.wyki.aggro.api
 
 import io.wyki.aggro.app.generated.api.AggregationsApi
 import io.wyki.aggro.app.generated.model.AggregationType
-import io.wyki.aggro.sdk.types.Aggregation
-import java.util.Arrays
+import io.wyki.aggro.sdk.domain.Aggregation
 import javax.ws.rs.core.Response
 
 class AggregationsApiImpl : AggregationsApi {

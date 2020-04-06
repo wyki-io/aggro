@@ -26,6 +26,11 @@
             <artifactId>app</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.wyki.aggro</groupId>
+            <artifactId>sdk</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -73,6 +73,7 @@
         <module>build-tools</module>
         <module>coverage</module>
         <module>app</module>
+        <module>sdk</module>
     </modules>
 
     <dependencyManagement>
@@ -95,6 +96,11 @@
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-kotlin</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-junit5</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.jacoco</groupId>

@@ -1,5 +1,7 @@
 # Aggro
 
+[![codecov](https://codecov.io/gh/wyki-io/aggro/branch/master/graph/badge.svg)](https://codecov.io/gh/wyki-io/aggro)
+
 This project aims to store timeseries data and give them back on different time
 interval.
 

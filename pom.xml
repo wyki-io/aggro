@@ -160,6 +160,8 @@
                         <option>all-open:annotation=javax.ws.rs.Path</option>
                         <option>all-open:annotation=javax.enterprise.context.ApplicationScoped</option>
                         <option>all-open:annotation=io.quarkus.test.junit.QuarkusTest</option>
+                        <option>all-open:annotation=io.quarkus.hibernate.orm.panache.PanacheEntity</option>
+                        <option>all-open:annotation=javax.persistence.Entity</option>
                     </pluginOptions>
                 </configuration>
             </plugin>
@@ -178,6 +180,10 @@
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${compiler-plugin.version}</version>
+                <configuration>
+                    <!-- the parameters=true option is critical so that RESTEasy works fine -->
+                    <parameters>true</parameters>
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>

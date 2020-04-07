@@ -74,6 +74,7 @@
         <module>coverage</module>
         <module>app</module>
         <module>sdk</module>
+        <module>storage</module>
     </modules>
 
     <dependencyManagement>

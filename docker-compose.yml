@@ -1,0 +1,7 @@
+version: '2.3'
+
+services:
+  db:
+    container_name: aggro_db
+    image: timescale/timescaledb:1.6.1-pg11
+    env_file: .env

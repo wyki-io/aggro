@@ -10,5 +10,5 @@ import javax.persistence.MappedSuperclass
 open class PanacheEntityUUID : PanacheEntityBase() {
     @Id
     @GeneratedValue
-    var id: UUID = UUID.randomUUID()
+    lateinit var id: UUID
 }

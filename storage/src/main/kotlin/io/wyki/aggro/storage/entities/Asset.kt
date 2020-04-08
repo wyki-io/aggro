@@ -17,7 +17,7 @@ class Asset : PanacheEntityUUID() {
     var name: String = ""
 
     @OneToMany(
-        cascade = [CascadeType.ALL],
+        cascade = [CascadeType.MERGE],
         targetEntity = TagValue::class,
         mappedBy = "asset",
         fetch = FetchType.EAGER,
@@ -27,7 +27,7 @@ class Asset : PanacheEntityUUID() {
     var tags: Set<TagValue> = setOf()
 
     @OneToMany(
-        cascade = [CascadeType.ALL],
+        cascade = [CascadeType.MERGE],
         targetEntity = DataType::class,
         fetch = FetchType.EAGER
     )

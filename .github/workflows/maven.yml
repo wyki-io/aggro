@@ -40,8 +40,6 @@ jobs:
 
       - name: Produce Coverage reports
         run: mvn -B verify
-        env:
-          DB_HOST: postgres
 
       - uses: codecov/codecov-action@v1
         with:

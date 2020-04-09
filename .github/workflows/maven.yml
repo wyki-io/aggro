@@ -9,6 +9,18 @@ jobs:
 
     runs-on: ubuntu-18.04
 
+    services:
+      postgres:
+        image: timescale/timescaledb:1.6.1-pg11
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: aggro_test
+        ports:
+          - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
     steps:
       - uses: actions/checkout@v2
 
@@ -26,11 +38,10 @@ jobs:
         with:
           java-version: 11
 
-      - name: Build with Maven
-        run: mvn -B package
-
       - name: Produce Coverage reports
         run: mvn -B verify
+        env:
+          DB_HOST: postgres
 
       - uses: codecov/codecov-action@v1
         with:

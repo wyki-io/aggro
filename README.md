@@ -13,12 +13,15 @@ This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
 
-## Running the application in dev mode
+## Running the application in dev mode 
 
 You can run your application in dev mode that enables live coding using:
 ```
-./mvnw quarkus:dev
+./mvnw quarkus:dev -pl :app
 ```
+
+You may need to first run `./mvnw install` in order to have the application
+dependencies correctly installed in your local Maven repository.
 
 ## Packaging and running the application
 

@@ -5,7 +5,10 @@ import javax.persistence.Entity
 
 @Entity(name = "tag")
 class Tag : PanacheEntityUUID() {
-    @Column(nullable = false)
+    @Column(
+        nullable = false,
+        unique = true
+    )
     var name: String = ""
 
     @Column(

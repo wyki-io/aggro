@@ -2,13 +2,13 @@ package io.wyki.aggro.storage.entities
 
 import io.quarkus.test.junit.QuarkusTest
 import io.wyki.aggro.storage.repositories.TagRepository
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Test
 import java.lang.Exception
 import javax.inject.Inject
 import javax.persistence.PersistenceException
 import javax.transaction.Transactional
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 
 @QuarkusTest
 @Transactional
@@ -20,7 +20,7 @@ internal class TagTest {
     val sampleName = "test name"
     val sampleDescription = "test description"
 
-    fun sampleTag() : Tag {
+    fun sampleTag(): Tag {
         val ret = Tag()
         ret.name = sampleName
         ret.description = sampleDescription

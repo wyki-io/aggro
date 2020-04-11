@@ -13,6 +13,14 @@ This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
 
+## Formatting
+
+This projects uses [ktlint](https://github.com/pinterest/ktlint) to format
+Kotlin code. It runs the format during the Maven build.
+
+You can configure your IDE to warn you about this formatting following the link
+above.
+
 ## Running the application in dev mode 
 
 You can run your application in dev mode that enables live coding using:

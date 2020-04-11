@@ -18,5 +18,4 @@ open class GreetingResourceTest {
             .statusCode(200)
             .body("message", equalTo("hello"))
     }
-
 }

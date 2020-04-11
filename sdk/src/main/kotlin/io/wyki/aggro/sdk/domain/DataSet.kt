@@ -9,5 +9,4 @@ data class DataSet(
     val interval: Interval,
     val aggregation: Aggregation,
     val data: List<Data>
-) {
-}
+)

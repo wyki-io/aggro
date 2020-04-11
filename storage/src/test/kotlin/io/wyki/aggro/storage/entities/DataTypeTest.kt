@@ -2,17 +2,14 @@ package io.wyki.aggro.storage.entities
 
 import io.quarkus.test.junit.QuarkusTest
 import io.wyki.aggro.storage.repositories.DataTypeRepository
-import org.hibernate.engine.jdbc.spi.SqlExceptionHelper
-import org.hibernate.exception.ConstraintViolationException
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import java.lang.Exception
 import javax.inject.Inject
 import javax.persistence.PersistenceException
 import javax.transaction.Transactional
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 @QuarkusTest
 @Transactional
@@ -25,7 +22,7 @@ internal class DataTypeTest {
     val sampleDescription = "test description"
     val sampleUnit = "test unit"
 
-    fun sampleDataType() : DataType {
+    fun sampleDataType(): DataType {
         val ret = DataType()
         ret.name = sampleName
         ret.description = sampleDescription

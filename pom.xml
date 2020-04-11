@@ -62,15 +62,12 @@
         <jacoco.execution.output.directory>${project.reporting.outputDirectory}/jacoco</jacoco.execution.output.directory>
         <spotbug.version>4.0.1</spotbug.version>
         <spotbug-maven-plugin.version>4.0.0</spotbug-maven-plugin.version>
-
-
         <!-- App -->
         <openapi-generator-maven-plugin.version>4.3.0</openapi-generator-maven-plugin.version>
         <build-helper-maven-plugin.version>3.0.0</build-helper-maven-plugin.version>
     </properties>
 
     <modules>
-        <module>build-tools</module>
         <module>coverage</module>
         <module>app</module>
         <module>sdk</module>
@@ -92,15 +89,6 @@
     <build>
         <sourceDirectory>src/main/kotlin</sourceDirectory>
         <testSourceDirectory>src/test/kotlin</testSourceDirectory>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>net.revelc.code.formatter</groupId>
-                    <artifactId>formatter-maven-plugin</artifactId>
-                    <version>${formatter-maven-plugin}</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -143,23 +131,18 @@
                 <version>${maven-site-plugin.version}</version>
             </plugin>
             <plugin>
-                <groupId>net.revelc.code.formatter</groupId>
-                <artifactId>formatter-maven-plugin</artifactId>
-
+                <groupId>com.github.gantsign.maven</groupId>
+                <artifactId>ktlint-maven-plugin</artifactId>
+                <version>1.4.2</version>
                 <executions>
                     <execution>
+                        <id>format-and-check</id>
                         <goals>
                             <goal>format</goal>
+                            <goal>check</goal>
                         </goals>
-                        <configuration>
-                            <configFile>formatter/eclipse-formatter.xml</configFile>
-                        </configuration>
                     </execution>
                 </executions>
-                <configuration>
-                    <lineEnding>LF</lineEnding>
-                    <encoding>UTF-8</encoding>
-                </configuration>
             </plugin>
             <!-- Code coverage -->
             <plugin>

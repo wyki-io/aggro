@@ -1,6 +1,6 @@
 package io.wyki.aggro.sdk.domain
 
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 internal class IntervalTest {
@@ -66,7 +66,9 @@ internal class IntervalTest {
 
     @Test
     fun from_random_input() {
-        val interval = Interval.from("Lorem ipsum12Mdolorsitamet234mindo lo tem45dcarne vag ni so28h")
+        val interval = Interval.from(
+            "Lorem ipsum12Mdolorsitamet234mindo lo tem45dcarne vag ni so28h"
+        )
         assertEquals("13M16d7h54m", interval.toString())
     }
 

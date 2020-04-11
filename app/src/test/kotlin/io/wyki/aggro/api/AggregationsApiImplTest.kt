@@ -1,5 +1,6 @@
 package io.wyki.aggro.api
 
+/* ktlint-disable import-ordering */
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.quarkus.test.junit.QuarkusTest
 import io.restassured.RestAssured

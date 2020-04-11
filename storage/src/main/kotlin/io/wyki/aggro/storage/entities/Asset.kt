@@ -1,14 +1,14 @@
 package io.wyki.aggro.storage.entities
 
-import org.hibernate.annotations.Fetch
-import org.hibernate.annotations.FetchMode
 import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.FetchType
 import javax.persistence.OneToMany
+import org.hibernate.annotations.Fetch
+import org.hibernate.annotations.FetchMode
 
-@Entity(name ="asset")
+@Entity(name = "asset")
 class Asset : PanacheEntityUUID() {
     @Column(
         nullable = false,

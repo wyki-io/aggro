@@ -33,7 +33,7 @@ class Interval(
         month += ret
     }
 
-    override fun toString() : String {
+    override fun toString(): String {
         var ret = if (month == 0) "" else "${month}M"
         ret += if (day == 0) "" else "${day}d"
         ret += if (hour == 0) "" else "${hour}h"
@@ -44,7 +44,7 @@ class Interval(
     }
 
     companion object {
-        fun from(input: String) : Interval {
+        fun from(input: String): Interval {
             return Interval(
                 _minute = Regex("[0-9]+m").find(input)?.value?.dropLast(1)?.toInt() ?: 0,
                 _hour = Regex("[0-9]+h").find(input)?.value?.dropLast(1)?.toInt() ?: 0,

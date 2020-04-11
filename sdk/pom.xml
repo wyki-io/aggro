@@ -33,21 +33,6 @@
     </dependencies>
 
     <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>net.revelc.code.formatter</groupId>
-                    <artifactId>formatter-maven-plugin</artifactId>
-                    <dependencies>
-                        <dependency>
-                            <groupId>io.wyki.aggro</groupId>
-                            <artifactId>build-tools</artifactId>
-                            <version>${project.version}</version>
-                        </dependency>
-                    </dependencies>
-                </plugin>
-            </plugins>
-        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>

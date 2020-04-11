@@ -7,7 +7,7 @@ import javax.enterprise.context.ApplicationScoped
 
 @ApplicationScoped
 class TagRepository : PanacheRepositoryBase<Tag, UUID> {
-    fun findByName(name: String) : Tag {
+    fun findByName(name: String): Tag {
         return find("name", name).firstResult()
     }
 

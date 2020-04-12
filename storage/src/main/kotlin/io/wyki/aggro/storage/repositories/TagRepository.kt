@@ -7,11 +7,7 @@ import javax.enterprise.context.ApplicationScoped
 
 @ApplicationScoped
 class TagRepository : PanacheRepositoryBase<Tag, UUID> {
-    fun findByName(name: String): Tag {
-        return find("name", name).firstResult()
-    }
+    fun findByName(name: String): Tag? = find("name", name).firstResult()
 
-    fun deleteByName(name: String) {
-        delete("name", name)
-    }
+    fun deleteByName(name: String) = delete("name", name)
 }

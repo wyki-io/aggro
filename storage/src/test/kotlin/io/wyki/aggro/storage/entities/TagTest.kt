@@ -2,13 +2,14 @@ package io.wyki.aggro.storage.entities
 
 import io.quarkus.test.junit.QuarkusTest
 import io.wyki.aggro.storage.repositories.TagRepository
-import java.lang.Exception
 import javax.inject.Inject
 import javax.persistence.PersistenceException
 import javax.transaction.Transactional
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 @QuarkusTest
 @Transactional
@@ -60,17 +61,20 @@ internal class TagTest {
         tag.persist()
 
         val res = tagRepository.findByName(tag.name)
-        assertEquals(tag.name, res.name)
+        assertEquals(tag.name, res?.name)
 
         tagRepository.deleteByName(tag.name)
         assertEquals(0, tagRepository.count())
+
+        val empty = tagRepository.findByName("nothing")
+        assertNull(empty)
     }
 
     @Test
     @Throws(Exception::class)
     fun `tag check name uniqueness`() {
         sampleTag().persist()
-        org.junit.jupiter.api.assertThrows<PersistenceException> {
+        assertThrows<PersistenceException> {
             val tag = sampleTag()
             tag.persist()
             tag.flush()

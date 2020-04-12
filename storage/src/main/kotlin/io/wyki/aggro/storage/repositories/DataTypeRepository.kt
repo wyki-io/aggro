@@ -10,11 +10,7 @@ import javax.enterprise.context.ApplicationScoped
  */
 @ApplicationScoped
 class DataTypeRepository : PanacheRepositoryBase<DataType, UUID> {
-    fun findByName(name: String): DataType {
-        return find("name", name).firstResult()
-    }
+    fun findByName(name: String): DataType? = find("name", name).firstResult()
 
-    fun deleteByName(name: String) {
-        delete("name", name)
-    }
+    fun deleteByName(name: String) = delete("name", name)
 }

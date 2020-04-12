@@ -1,12 +1,15 @@
 package io.wyki.aggro.storage.entities
 
-import javax.persistence.CascadeType
+import javax.persistence.CascadeType.ALL
+import javax.persistence.CascadeType.DETACH
+import javax.persistence.CascadeType.MERGE
+import javax.persistence.CascadeType.PERSIST
 import javax.persistence.Column
 import javax.persistence.Entity
-import javax.persistence.FetchType
+import javax.persistence.JoinColumn
+import javax.persistence.JoinTable
+import javax.persistence.ManyToMany
 import javax.persistence.OneToMany
-import org.hibernate.annotations.Fetch
-import org.hibernate.annotations.FetchMode
 
 @Entity(name = "asset")
 class Asset : PanacheEntityUUID() {
@@ -17,20 +20,17 @@ class Asset : PanacheEntityUUID() {
     var name: String = ""
 
     @OneToMany(
-        cascade = [CascadeType.MERGE],
-        targetEntity = TagValue::class,
         mappedBy = "asset",
-        fetch = FetchType.EAGER,
+        cascade = [ALL],
         orphanRemoval = true
     )
-    @Fetch(value = FetchMode.SUBSELECT)
-    var tags: Set<TagValue> = setOf()
+    var tags: MutableSet<TagValue> = mutableSetOf()
 
-    @OneToMany(
-        cascade = [CascadeType.MERGE],
-        targetEntity = DataType::class,
-        fetch = FetchType.EAGER
+    @ManyToMany(cascade = [PERSIST, DETACH, MERGE])
+    @JoinTable(
+        name = "join__asset__data_type",
+        joinColumns = [ JoinColumn(name = "asset") ],
+        inverseJoinColumns = [ JoinColumn(name = "data_type") ]
     )
-    @Fetch(value = FetchMode.SUBSELECT)
-    var dataTypes: Set<DataType> = setOf()
+    var dataTypes: MutableSet<DataType> = mutableSetOf()
 }

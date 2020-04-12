@@ -2,12 +2,12 @@ package io.wyki.aggro.storage.entities
 
 import io.quarkus.test.junit.QuarkusTest
 import io.wyki.aggro.storage.repositories.DataTypeRepository
-import java.lang.Exception
 import javax.inject.Inject
 import javax.persistence.PersistenceException
 import javax.transaction.Transactional
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -64,10 +64,13 @@ internal class DataTypeTest {
         dataType.persist()
 
         val res = dataTypeRepository.findByName(dataType.name)
-        assertEquals(dataType.name, res.name)
+        assertEquals(dataType.name, res?.name)
 
         dataTypeRepository.deleteByName(dataType.name)
         assertEquals(0, dataTypeRepository.count())
+
+        val empty = dataTypeRepository.findByName("nothing")
+        assertNull(empty)
     }
 
     @Test

@@ -7,13 +7,13 @@ import io.wyki.aggro.storage.entities.SampleEntities.sampleTagValue
 import io.wyki.aggro.storage.repositories.AssetRepository
 import io.wyki.aggro.storage.repositories.TagRepository
 import io.wyki.aggro.storage.repositories.TagValueRepository
+import java.util.UUID
+import javax.inject.Inject
+import javax.transaction.Transactional
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Test
-import java.util.UUID
-import javax.inject.Inject
-import javax.transaction.Transactional
 
 @QuarkusTest
 @Transactional

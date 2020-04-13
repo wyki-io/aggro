@@ -1,5 +1,7 @@
 package io.wyki.aggro.storage.entities
 
+import java.time.ZonedDateTime
+
 object SampleEntities {
     val sampleDataTypeName = "dataType name"
     val sampleDataTypeDescription = "dataType description"
@@ -11,6 +13,9 @@ object SampleEntities {
     val sampleTagDescription = "tag description"
 
     val sampleTagValueName = "tag value"
+
+    val sampleDataValue = 0.0
+    val sampleDataDate = ZonedDateTime.parse("2020-01-01T14:00:00Z")
 
     fun sampleDataType(
         name: String = sampleDataTypeName,
@@ -38,6 +43,20 @@ object SampleEntities {
     fun sampleAsset(name: String = sampleAssetName): Asset {
         val ret = Asset()
         ret.name = name
+        return ret
+    }
+
+    fun sampleData(
+        value: Double = sampleDataValue,
+        date: ZonedDateTime = sampleDataDate,
+        asset: Asset,
+        dataType: DataType
+    ): Data {
+        val ret = Data()
+        ret.value = value
+        ret.timestamp = date
+        ret.asset = asset
+        ret.dataType = dataType
         return ret
     }
 }

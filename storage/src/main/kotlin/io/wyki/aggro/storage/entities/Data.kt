@@ -1,6 +1,7 @@
 package io.wyki.aggro.storage.entities
 
 import java.time.ZonedDateTime
+import javax.persistence.CascadeType.PERSIST
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.FetchType
@@ -12,14 +13,20 @@ class Data : PanacheEntityUUID() {
     @Column(nullable = false)
     var timestamp: ZonedDateTime = ZonedDateTime.now()
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(
+        cascade = [PERSIST],
+        fetch = FetchType.LAZY
+    )
     @JoinColumn(
         name = "asset",
         nullable = false
     )
     var asset: Asset = Asset()
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(
+        cascade = [PERSIST],
+        fetch = FetchType.LAZY
+    )
     @JoinColumn(
         name = "data_type",
         nullable = false

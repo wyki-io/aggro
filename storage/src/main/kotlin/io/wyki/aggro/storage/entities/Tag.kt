@@ -20,7 +20,6 @@ class Tag : PanacheEntityUUID() {
 
     @OneToMany(
         mappedBy = "tag",
-        // cascade = [ALL],
         orphanRemoval = true
     )
     var values: MutableSet<TagValue> = mutableSetOf()

@@ -17,7 +17,6 @@ internal class DataTypeTest {
 
     @Inject
     lateinit var dataTypeRepository: DataTypeRepository
-
     val sampleName = "test name"
     val sampleDescription = "test description"
     val sampleUnit = "test unit"
@@ -29,7 +28,6 @@ internal class DataTypeTest {
         ret.unit = sampleUnit
         return ret
     }
-
     @AfterEach
     fun cleanDataTypes() {
         dataTypeRepository.deleteAll()

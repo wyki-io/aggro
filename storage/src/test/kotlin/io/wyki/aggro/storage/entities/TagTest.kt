@@ -1,7 +1,12 @@
 package io.wyki.aggro.storage.entities
 
 import io.quarkus.test.junit.QuarkusTest
+import io.wyki.aggro.storage.entities.SampleEntities.sampleAsset
+import io.wyki.aggro.storage.entities.SampleEntities.sampleTag
+import io.wyki.aggro.storage.entities.SampleEntities.sampleTagValue
+import io.wyki.aggro.storage.repositories.AssetRepository
 import io.wyki.aggro.storage.repositories.TagRepository
+import io.wyki.aggro.storage.repositories.TagValueRepository
 import javax.inject.Inject
 import javax.persistence.PersistenceException
 import javax.transaction.Transactional
@@ -17,20 +22,16 @@ internal class TagTest {
 
     @Inject
     lateinit var tagRepository: TagRepository
-
-    val sampleName = "test name"
-    val sampleDescription = "test description"
-
-    fun sampleTag(): Tag {
-        val ret = Tag()
-        ret.name = sampleName
-        ret.description = sampleDescription
-        return ret
-    }
+    @Inject
+    lateinit var tagValueRepository: TagValueRepository
+    @Inject
+    lateinit var assetRepository: AssetRepository
 
     @AfterEach
     fun cleanTags() {
+        tagValueRepository.deleteAll()
         tagRepository.deleteAll()
+        assetRepository.deleteAll()
     }
 
     @Test
@@ -79,5 +80,27 @@ internal class TagTest {
             tag.persist()
             tag.flush()
         }
+    }
+
+    @Test
+    fun `tag tagValue validate relation`() {
+        val asset = sampleAsset()
+        val tag = sampleTag()
+        tag.values = mutableSetOf()
+
+        val tagValue = sampleTagValue(asset = asset, tag = tag)
+        tagValue.persist()
+
+        assertEquals(1, assetRepository.count())
+        assertEquals(1, tagRepository.count())
+        assertEquals(1, tagValueRepository.count())
+
+        val tag2 = sampleTag("another")
+        val tagValue2 = sampleTagValue(asset = asset, tag = tag2)
+        tagValue2.persist()
+
+        assertEquals(1, assetRepository.count())
+        assertEquals(2, tagRepository.count())
+        assertEquals(2, tagValueRepository.count())
     }
 }

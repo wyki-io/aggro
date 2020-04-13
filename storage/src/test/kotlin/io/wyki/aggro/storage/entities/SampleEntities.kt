@@ -1,20 +1,33 @@
 package io.wyki.aggro.storage.entities
 
 object SampleEntities {
-    const val sampleAssetName = "asset name"
-    const val sampleDataTypeName = "dataType name"
-    const val sampleTagName = "tag name"
-    const val sampleTagValueName = "tag value"
+    val sampleDataTypeName = "dataType name"
+    val sampleDataTypeDescription = "dataType description"
+    val sampleDataTypeUnit = "dataType unit"
 
-    fun sampleDataType(name: String = sampleDataTypeName): DataType {
+    val sampleAssetName = "asset name"
+
+    val sampleTagName = "tag name"
+    val sampleTagDescription = "tag description"
+
+    val sampleTagValueName = "tag value"
+
+    fun sampleDataType(
+        name: String = sampleDataTypeName,
+        description: String = sampleDataTypeDescription,
+        unit: String = sampleDataTypeUnit
+    ): DataType {
         val ret = DataType()
         ret.name = name
+        ret.description = description
+        ret.unit = unit
         return ret
     }
 
-    fun sampleTag(name: String = sampleTagName): Tag {
+    fun sampleTag(name: String = sampleTagName, description: String = sampleTagDescription): Tag {
         val ret = Tag()
         ret.name = name
+        ret.description = description
         return ret
     }
 

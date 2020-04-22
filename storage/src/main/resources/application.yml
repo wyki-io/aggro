@@ -8,14 +8,19 @@ quarkus:
   hibernate-orm:
     database:
       generation: drop-and-create
+  flyway:
+    migrate-at-start: true
 '%test':
-   quarkus:
-     datasource:
-       db-kind: postgresql
-       username: ${DB_USER:postgres}
-       password: ${DB_PASS:postgres}
-       jdbc:
-         url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:aggro}_test
-     hibernate-orm:
-       database:
-         generation: drop-and-create
+  quarkus:
+    datasource:
+      db-kind: postgresql
+      username: ${DB_USER:postgres}
+      password: ${DB_PASS:postgres}
+      jdbc:
+        url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:aggro}_test
+    hibernate-orm:
+      database:
+        generation: drop-and-create
+    flyway:
+      migrate-at-start: true
+      clean-at-start: true

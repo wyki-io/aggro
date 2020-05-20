@@ -4,7 +4,7 @@ import javax.persistence.Column
 import javax.persistence.Entity
 
 @Entity(name = "data_type")
-class DataType : PanacheEntityUUID() {
+class DataType() : PanacheEntityUUID() {
     @Column(
         nullable = false,
         unique = true
@@ -19,4 +19,14 @@ class DataType : PanacheEntityUUID() {
 
     @Column(nullable = false)
     var unit: String = ""
+
+    constructor(
+        name: String = "",
+        description: String = "",
+        unit: String = ""
+    ) : this() {
+        this.name = name
+        this.description = description
+        this.unit = unit
+    }
 }

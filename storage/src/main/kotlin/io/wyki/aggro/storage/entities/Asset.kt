@@ -12,7 +12,7 @@ import javax.persistence.ManyToMany
 import javax.persistence.OneToMany
 
 @Entity(name = "asset")
-class Asset : PanacheEntityUUID() {
+class Asset() : PanacheEntityUUID() {
     @Column(
         nullable = false,
         unique = true
@@ -33,4 +33,14 @@ class Asset : PanacheEntityUUID() {
         inverseJoinColumns = [ JoinColumn(name = "data_type") ]
     )
     var dataTypes: MutableSet<DataType> = mutableSetOf()
+
+    constructor(
+        name: String = "",
+        tags: MutableSet<TagValue> = mutableSetOf(),
+        dataTypes: MutableSet<DataType> = mutableSetOf()
+    ) : this() {
+        this.name = name
+        this.tags = tags
+        this.dataTypes = dataTypes
+    }
 }

@@ -9,7 +9,7 @@ import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
 
 @Entity(name = "data")
-class Data : PanacheEntityUUID() {
+class Data() : PanacheEntityUUID() {
     @Column(nullable = false)
     var timestamp: ZonedDateTime = ZonedDateTime.now()
 
@@ -35,4 +35,16 @@ class Data : PanacheEntityUUID() {
 
     @Column(nullable = false)
     var value: Double = 0.0
+
+    constructor(
+        value: Double,
+        timestamp: ZonedDateTime,
+        asset: Asset,
+        dataType: DataType
+    ) : this() {
+        this.value = value
+        this.timestamp = timestamp
+        this.asset = asset
+        this.dataType = dataType
+    }
 }

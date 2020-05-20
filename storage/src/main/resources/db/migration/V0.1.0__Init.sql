@@ -1,3 +1,5 @@
+CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE;
+
 CREATE TABLE asset (
     id uuid NOT NULL CONSTRAINT asset_pkey PRIMARY KEY,
     name character varying(255) NOT NULL CONSTRAINT asset_unique_name UNIQUE
@@ -19,19 +21,21 @@ CREATE TABLE tag (
 CREATE TABLE tag_value (
     id uuid NOT NULL CONSTRAINT tag_value_pkey PRIMARY KEY,
     value character varying(255) NOT NULL,
-    asset uuid NOT NULL REFERENCES tag(id) NOT DEFERRABLE,
-    tag uuid NOT NULL REFERENCES asset(id) NOT DEFERRABLE
+    asset uuid NOT NULL REFERENCES tag(id) ON DELETE CASCADE NOT DEFERRABLE,
+    tag uuid NOT NULL REFERENCES asset(id) ON DELETE CASCADE NOT DEFERRABLE
 );
 
 CREATE TABLE data (
-    timestamp timestamp NOT NULL,
+    id uuid NOT NULL CONSTRAINT data_pkey PRIMARY KEY,
+    timestamp timestamptz NOT NULL,
     value double precision NOT NULL,
-    asset uuid NOT NULL REFERENCES asset(id) NOT DEFERRABLE,
-    data_type uuid NOT NULL REFERENCES data_type(id) NOT DEFERRABLE
+    asset uuid NOT NULL REFERENCES asset(id) ON DELETE CASCADE NOT DEFERRABLE,
+    data_type uuid NOT NULL REFERENCES data_type(id) ON DELETE CASCADE NOT DEFERRABLE
 );
+-- SELECT create_hypertable('data', 'timestamp');
 
 CREATE TABLE join__asset__data_type (
-    asset uuid NOT NULL REFERENCES asset(id) NOT DEFERRABLE,
-    data_type uuid NOT NULL REFERENCES data_type(id) NOT DEFERRABLE,
+    asset uuid NOT NULL REFERENCES asset(id) ON DELETE CASCADE NOT DEFERRABLE,
+    data_type uuid NOT NULL REFERENCES data_type(id) ON DELETE CASCADE NOT DEFERRABLE,
     CONSTRAINT join__asset__data_type_pkey PRIMARY KEY (asset, data_type)
 );

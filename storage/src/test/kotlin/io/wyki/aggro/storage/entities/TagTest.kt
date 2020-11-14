@@ -4,7 +4,6 @@ import io.quarkus.test.junit.QuarkusTest
 import io.wyki.aggro.storage.entities.SampleEntities.sampleAsset
 import io.wyki.aggro.storage.entities.SampleEntities.sampleTag
 import io.wyki.aggro.storage.entities.SampleEntities.sampleTagValue
-import io.wyki.aggro.storage.repositories.AssetRepository
 import io.wyki.aggro.storage.repositories.TagRepository
 import io.wyki.aggro.storage.repositories.TagValueRepository
 import javax.inject.Inject
@@ -24,14 +23,12 @@ internal class TagTest {
     lateinit var tagRepository: TagRepository
     @Inject
     lateinit var tagValueRepository: TagValueRepository
-    @Inject
-    lateinit var assetRepository: AssetRepository
 
     @AfterEach
     fun cleanTags() {
         tagValueRepository.deleteAll()
         tagRepository.deleteAll()
-        assetRepository.deleteAll()
+        Asset.deleteAll()
     }
 
     @Test
@@ -91,7 +88,7 @@ internal class TagTest {
         val tagValue = sampleTagValue(asset = asset, tag = tag)
         tagValue.persist()
 
-        assertEquals(1, assetRepository.count())
+        assertEquals(1, Asset.count())
         assertEquals(1, tagRepository.count())
         assertEquals(1, tagValueRepository.count())
 
@@ -99,7 +96,7 @@ internal class TagTest {
         val tagValue2 = sampleTagValue(asset = asset, tag = tag2)
         tagValue2.persist()
 
-        assertEquals(1, assetRepository.count())
+        assertEquals(1, Asset.count())
         assertEquals(2, tagRepository.count())
         assertEquals(2, tagValueRepository.count())
     }

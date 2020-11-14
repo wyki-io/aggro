@@ -5,7 +5,6 @@ import io.wyki.aggro.storage.entities.SampleEntities.sampleAsset
 import io.wyki.aggro.storage.entities.SampleEntities.sampleDataType
 import io.wyki.aggro.storage.entities.SampleEntities.sampleTag
 import io.wyki.aggro.storage.entities.SampleEntities.sampleTagValue
-import io.wyki.aggro.storage.repositories.AssetRepository
 import io.wyki.aggro.storage.repositories.DataTypeRepository
 import io.wyki.aggro.storage.repositories.TagRepository
 import io.wyki.aggro.storage.repositories.TagValueRepository

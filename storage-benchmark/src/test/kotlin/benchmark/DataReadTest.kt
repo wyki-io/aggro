@@ -1,7 +1,7 @@
 package benchmark
 
 import io.quarkus.test.junit.QuarkusTest
-import io.wyki.aggro.storage.repositories.AssetRepository
+import io.wyki.aggro.storage.entities.Asset
 import io.wyki.aggro.storage.repositories.DataRepository
 import io.wyki.aggro.storage.repositories.DataTypeRepository
 import org.junit.jupiter.api.Tag
@@ -18,14 +18,12 @@ class DataReadTest {
     @Inject
     lateinit var dataTypeRepository: DataTypeRepository
     @Inject
-    lateinit var assetRepository: AssetRepository
-    @Inject
     lateinit var dataRepository: DataRepository
 
     @Test
     fun averagePerHour() {
         val dt = dataTypeRepository.findByName(DataProvisioning.electricityConsumptionName)!!
-        val asset = assetRepository.findByName(DataProvisioning.assetOneName)!!
+        val asset = Asset.findByName(DataProvisioning.assetOneName)!!
         println("Time ${ZonedDateTime.now()}")
         val data = dataRepository.findByAssetAndTypeBucketPerHour(
             asset,

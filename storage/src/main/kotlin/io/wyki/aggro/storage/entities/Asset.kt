@@ -2,6 +2,7 @@ package io.wyki.aggro.storage.entities
 
 import io.quarkus.hibernate.orm.panache.kotlin.PanacheCompanion
 import io.quarkus.hibernate.orm.panache.kotlin.PanacheEntity
+import org.junit.jupiter.api.Tags
 import java.util.UUID
 import javax.persistence.CascadeType.ALL
 import javax.persistence.CascadeType.DETACH
@@ -15,7 +16,18 @@ import javax.persistence.ManyToMany
 import javax.persistence.OneToMany
 
 @Entity(name = "asset")
-class Asset : PanacheEntityUUID() {
+class Asset() : PanacheEntityUUID() {
+
+    constructor(
+        name: String = "",
+        tags: MutableSet<TagValue> = mutableSetOf(),
+        dataTypes: MutableSet<DataType> = mutableSetOf()
+    ) {
+        this.name = name
+        this.tags = tags
+        this.dataTypes = dataTypes
+    }
+
     @Column(
         nullable = false,
         unique = true

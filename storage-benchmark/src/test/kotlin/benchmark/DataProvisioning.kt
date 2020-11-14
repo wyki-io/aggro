@@ -4,7 +4,6 @@ import io.quarkus.test.junit.QuarkusTest
 import io.wyki.aggro.storage.entities.Asset
 import io.wyki.aggro.storage.entities.Data
 import io.wyki.aggro.storage.entities.DataType
-import io.wyki.aggro.storage.repositories.AssetRepository
 import io.wyki.aggro.storage.repositories.DataRepository
 import io.wyki.aggro.storage.repositories.DataTypeRepository
 import org.flywaydb.core.Flyway
@@ -31,8 +30,6 @@ class DataProvisioning {
     lateinit var flyway: Flyway
     @Inject
     lateinit var dataTypeRepository: DataTypeRepository
-    @Inject
-    lateinit var assetRepository: AssetRepository
     @Inject
     lateinit var dataRepository: DataRepository
 
@@ -81,7 +78,7 @@ class DataProvisioning {
 
     fun initAsset() {
         for (asset in assets) {
-            val row = assetRepository.findByName(asset.key)
+            val row = Asset.findByName(asset.key)
             if (row != null) {
                 assets[asset.key] = row
             }

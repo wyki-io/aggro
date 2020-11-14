@@ -4,7 +4,6 @@ import io.quarkus.test.junit.QuarkusTest
 import io.wyki.aggro.storage.entities.SampleEntities.sampleAsset
 import io.wyki.aggro.storage.entities.SampleEntities.sampleData
 import io.wyki.aggro.storage.entities.SampleEntities.sampleDataType
-import io.wyki.aggro.storage.repositories.AssetRepository
 import io.wyki.aggro.storage.repositories.DataRepository
 import io.wyki.aggro.storage.repositories.DataTypeRepository
 import javax.inject.Inject
@@ -21,13 +20,11 @@ internal class DataTest {
     lateinit var dataRepository: DataRepository
     @Inject
     lateinit var dataTypeRepository: DataTypeRepository
-    @Inject
-    lateinit var assetRepository: AssetRepository
 
     @AfterEach
     fun cleanDatabase() {
         dataRepository.deleteAll()
-        assetRepository.deleteAll()
+        Asset.deleteAll()
         dataTypeRepository.deleteAll()
     }
 
@@ -59,7 +56,7 @@ internal class DataTest {
         assertEquals(1, dataRepository.count())
         res.delete()
         assertEquals(0, dataRepository.count())
-        assertEquals(1, assetRepository.count())
+        assertEquals(1, Asset.count())
         assertEquals(1, dataTypeRepository.count())
     }
 }

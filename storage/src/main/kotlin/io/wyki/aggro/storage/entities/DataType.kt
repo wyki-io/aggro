@@ -21,7 +21,7 @@ class DataType(
     var unit: String = ""
 ) : PanacheEntityUUID() {
 
-    companion object: PanacheCompanion<DataType, UUID> {
+    companion object : PanacheCompanion<DataType, UUID> {
         fun findByName(name: String): DataType? = find("name", name).firstResult()
 
         fun deleteByName(name: String) = delete("name", name)

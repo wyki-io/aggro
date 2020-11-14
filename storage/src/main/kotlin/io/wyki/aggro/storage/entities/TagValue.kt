@@ -2,7 +2,6 @@ package io.wyki.aggro.storage.entities
 
 import io.quarkus.hibernate.orm.panache.kotlin.PanacheCompanion
 import java.util.UUID
-import javax.persistence.CascadeType.ALL
 import javax.persistence.CascadeType.DETACH
 import javax.persistence.CascadeType.MERGE
 import javax.persistence.CascadeType.PERSIST
@@ -20,7 +19,6 @@ class TagValue(
     asset: Asset = Asset(),
     tag: Tag = Tag()
 ) : PanacheEntityUUID() {
-
 
     @ManyToOne(
         fetch = LAZY,
@@ -55,5 +53,5 @@ class TagValue(
         this.tag = tag
     }
 
-    companion object: PanacheCompanion<TagValue, UUID>
+    companion object : PanacheCompanion<TagValue, UUID>
 }

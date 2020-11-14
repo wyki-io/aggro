@@ -4,10 +4,10 @@ import io.quarkus.test.junit.QuarkusTest
 import io.wyki.aggro.storage.entities.SampleEntities.sampleAsset
 import io.wyki.aggro.storage.entities.SampleEntities.sampleData
 import io.wyki.aggro.storage.entities.SampleEntities.sampleDataType
+import javax.transaction.Transactional
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import javax.transaction.Transactional
 
 @QuarkusTest
 @Transactional

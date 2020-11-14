@@ -12,5 +12,4 @@ class Main {
             Quarkus.run(*args)
         }
     }
-
 }

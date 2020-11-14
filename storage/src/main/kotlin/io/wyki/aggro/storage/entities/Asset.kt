@@ -1,8 +1,6 @@
 package io.wyki.aggro.storage.entities
 
 import io.quarkus.hibernate.orm.panache.kotlin.PanacheCompanion
-import io.quarkus.hibernate.orm.panache.kotlin.PanacheEntity
-import org.junit.jupiter.api.Tags
 import java.util.UUID
 import javax.persistence.CascadeType.ALL
 import javax.persistence.CascadeType.DETACH
@@ -16,30 +14,24 @@ import javax.persistence.ManyToMany
 import javax.persistence.OneToMany
 
 @Entity(name = "asset")
-class Asset() : PanacheEntityUUID() {
-
-    constructor(
-        name: String = "",
-        tags: MutableSet<TagValue> = mutableSetOf(),
-        dataTypes: MutableSet<DataType> = mutableSetOf()
-    ) {
-        this.name = name
-        this.tags = tags
-        this.dataTypes = dataTypes
-    }
+class Asset(
+    name: String = "",
+    tags: MutableSet<TagValue> = mutableSetOf(),
+    dataTypes: MutableSet<DataType> = mutableSetOf()
+) : PanacheEntityUUID() {
 
     @Column(
         nullable = false,
         unique = true
     )
-    var name: String = ""
+    var name: String = name
 
     @OneToMany(
         mappedBy = "asset",
         cascade = [ALL],
         orphanRemoval = true
     )
-    var tags: MutableSet<TagValue> = mutableSetOf()
+    var tags: MutableSet<TagValue> = tags
 
     @ManyToMany(cascade = [PERSIST, DETACH, MERGE])
     @JoinTable(
@@ -47,9 +39,9 @@ class Asset() : PanacheEntityUUID() {
         joinColumns = [ JoinColumn(name = "asset") ],
         inverseJoinColumns = [ JoinColumn(name = "data_type") ]
     )
-    var dataTypes: MutableSet<DataType> = mutableSetOf()
+    var dataTypes: MutableSet<DataType> = dataTypes
 
-    companion object: PanacheCompanion<Asset, UUID> {
+    companion object : PanacheCompanion<Asset, UUID> {
         fun findByName(name: String): Asset? = find("name", name).firstResult()
 
         fun deleteByName(name: String) = delete("name", name)

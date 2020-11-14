@@ -1,6 +1,8 @@
 package io.wyki.aggro.storage.entities
 
+import io.quarkus.hibernate.orm.panache.kotlin.PanacheCompanion
 import java.time.ZonedDateTime
+import java.util.UUID
 import javax.persistence.CascadeType.PERSIST
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -9,9 +11,18 @@ import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
 
 @Entity(name = "data")
-class Data() : PanacheEntityUUID() {
+class Data(
+    value: Double = 0.0,
+    timestamp: ZonedDateTime = ZonedDateTime.now(),
+    asset: Asset = Asset(),
+    dataType: DataType = DataType()
+) : PanacheEntityUUID() {
+
     @Column(nullable = false)
-    var timestamp: ZonedDateTime = ZonedDateTime.now()
+    var value: Double = value
+
+    @Column(nullable = false)
+    var timestamp: ZonedDateTime = timestamp
 
     @ManyToOne(
         cascade = [PERSIST],
@@ -21,7 +32,7 @@ class Data() : PanacheEntityUUID() {
         name = "asset",
         nullable = false
     )
-    var asset: Asset = Asset()
+    var asset: Asset = asset
 
     @ManyToOne(
         cascade = [PERSIST],
@@ -31,20 +42,22 @@ class Data() : PanacheEntityUUID() {
         name = "data_type",
         nullable = false
     )
-    var dataType: DataType = DataType()
+    var dataType: DataType = dataType
 
-    @Column(nullable = false)
-    var value: Double = 0.0
-
-    constructor(
-        value: Double,
-        timestamp: ZonedDateTime,
-        asset: Asset,
-        dataType: DataType
-    ) : this() {
-        this.value = value
-        this.timestamp = timestamp
-        this.asset = asset
-        this.dataType = dataType
+    companion object : PanacheCompanion<Data, UUID> {
+        fun findByAssetAndTypeBucketPerHour(
+            asset: Asset,
+            type: DataType,
+            start: ZonedDateTime,
+            end: ZonedDateTime
+        ): List<Data> = list(
+            """
+            select
+            """.trimIndent(),
+            asset,
+            type,
+            start,
+            end
+        )
     }
 }

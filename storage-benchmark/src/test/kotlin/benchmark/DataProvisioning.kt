@@ -4,18 +4,17 @@ import io.quarkus.test.junit.QuarkusTest
 import io.wyki.aggro.storage.entities.Asset
 import io.wyki.aggro.storage.entities.Data
 import io.wyki.aggro.storage.entities.DataType
-import io.wyki.aggro.storage.repositories.DataRepository
 import io.wyki.aggro.storage.repositories.DataTypeRepository
-import org.flywaydb.core.Flyway
-import org.junit.jupiter.api.Tag
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
-import org.junit.jupiter.api.fail
 import java.time.Instant
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
 import javax.inject.Inject
 import javax.transaction.Transactional
+import org.flywaydb.core.Flyway
+import org.junit.jupiter.api.Tag
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.fail
 
 // @BenchmarkQuarkusTest
 @QuarkusTest
@@ -30,8 +29,6 @@ class DataProvisioning {
     lateinit var flyway: Flyway
     @Inject
     lateinit var dataTypeRepository: DataTypeRepository
-    @Inject
-    lateinit var dataRepository: DataRepository
 
     companion object {
         const val electricityConsumptionName = "ELECTRICITY_CONSUMPTION"
@@ -69,8 +66,7 @@ class DataProvisioning {
             val row = dataTypeRepository.findByName(dataType.key)
             if (row != null) {
                 dataTypes[dataType.key] = row
-            }
-            else {
+            } else {
                 dataType.value.persist()
             }
         }
@@ -81,8 +77,7 @@ class DataProvisioning {
             val row = Asset.findByName(asset.key)
             if (row != null) {
                 assets[asset.key] = row
-            }
-            else {
+            } else {
                 asset.value.persist()
             }
         }
@@ -92,7 +87,7 @@ class DataProvisioning {
         if (step < 1) {
             fail("step must be greater than 0")
         }
-        for (date in from.toEpochSecond() .. to.toEpochSecond() step (24 * 60 * 60)) {
+        for (date in from.toEpochSecond()..to.toEpochSecond() step (24 * 60 * 60)) {
             val newFrom = ZonedDateTime.ofInstant(Instant.ofEpochSecond(date), ZoneOffset.UTC)
             println(newFrom)
             generateElectricityConsumptionData(newFrom, newFrom.plusDays(1), step)
@@ -109,15 +104,17 @@ class DataProvisioning {
             .filter { it.value.dataTypes.contains(dt) }
             .map { it.value }
         val data: MutableSet<Data> = mutableSetOf()
-        for (date in from.toEpochSecond() .. to.toEpochSecond() step (step * 60)) {
+        for (date in from.toEpochSecond()..to.toEpochSecond() step (step * 60)) {
             val dataTimestamp = ZonedDateTime.ofInstant(Instant.ofEpochSecond(date), ZoneOffset.UTC)
             val value = (date % 3600).toDouble()
             elecAssets.forEach {
                 data.add(Data(value, dataTimestamp, it, dt))
             }
         }
-        data.forEach{ it.persist() }
-        dataRepository.flush()
+        data.forEach {
+            it.persist()
+            it.flush()
+        }
     }
 
     // @BeforeAll

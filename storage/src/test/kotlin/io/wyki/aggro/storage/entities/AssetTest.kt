@@ -5,8 +5,6 @@ import io.wyki.aggro.storage.entities.SampleEntities.sampleAsset
 import io.wyki.aggro.storage.entities.SampleEntities.sampleDataType
 import io.wyki.aggro.storage.entities.SampleEntities.sampleTag
 import io.wyki.aggro.storage.entities.SampleEntities.sampleTagValue
-import io.wyki.aggro.storage.repositories.TagRepository
-import io.wyki.aggro.storage.repositories.TagValueRepository
 import javax.inject.Inject
 import javax.transaction.Transactional
 import org.junit.jupiter.api.AfterEach
@@ -19,15 +17,10 @@ import org.junit.jupiter.api.Test
 @Transactional
 internal class AssetTest {
 
-    @Inject
-    lateinit var tagRepository: TagRepository
-    @Inject
-    lateinit var tagValueRepository: TagValueRepository
-
     @AfterEach
     fun cleanDatabase() {
-        tagValueRepository.deleteAll()
-        tagRepository.deleteAll()
+        TagValue.deleteAll()
+        Tag.deleteAll()
         Asset.deleteAll()
         DataType.deleteAll()
     }
@@ -47,6 +40,7 @@ internal class AssetTest {
         assertEquals(1, assets.count())
         val res: Asset = assets.firstResult()!!
         assertEquals(asset.name, res.name)
+        assertTrue(res.tags.contains(tagValue))
         assertTrue(asset.tags.contains(tagValue))
         assertTrue(asset.dataTypes.contains(dataType))
 
@@ -60,8 +54,8 @@ internal class AssetTest {
         assertEquals(1, Asset.count())
         res.delete()
         assertEquals(0, Asset.count())
-        assertEquals(0, tagValueRepository.count())
-        assertEquals(1, tagRepository.count())
+        assertEquals(0, TagValue.count())
+        assertEquals(1, Tag.count())
         assertEquals(1, DataType.count())
     }
 

@@ -4,7 +4,6 @@ import io.quarkus.test.junit.QuarkusTest
 import io.wyki.aggro.storage.entities.Asset
 import io.wyki.aggro.storage.entities.Data
 import io.wyki.aggro.storage.entities.DataType
-import io.wyki.aggro.storage.repositories.DataTypeRepository
 import java.time.Instant
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
@@ -27,8 +26,6 @@ class DataProvisioning {
 
     @Inject
     lateinit var flyway: Flyway
-    @Inject
-    lateinit var dataTypeRepository: DataTypeRepository
 
     companion object {
         const val electricityConsumptionName = "ELECTRICITY_CONSUMPTION"
@@ -63,7 +60,7 @@ class DataProvisioning {
 
     fun initDataTypes() {
         for (dataType in dataTypes) {
-            val row = dataTypeRepository.findByName(dataType.key)
+            val row = DataType.findByName(dataType.key)
             if (row != null) {
                 dataTypes[dataType.key] = row
             } else {

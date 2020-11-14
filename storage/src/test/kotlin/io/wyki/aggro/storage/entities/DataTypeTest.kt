@@ -1,8 +1,6 @@
 package io.wyki.aggro.storage.entities
 
 import io.quarkus.test.junit.QuarkusTest
-import io.wyki.aggro.storage.repositories.DataTypeRepository
-import javax.inject.Inject
 import javax.persistence.PersistenceException
 import javax.transaction.Transactional
 import org.junit.jupiter.api.AfterEach
@@ -15,8 +13,6 @@ import org.junit.jupiter.api.assertThrows
 @Transactional
 internal class DataTypeTest {
 
-    @Inject
-    lateinit var dataTypeRepository: DataTypeRepository
     val sampleName = "test name"
     val sampleDescription = "test description"
     val sampleUnit = "test unit"
@@ -30,7 +26,7 @@ internal class DataTypeTest {
     }
     @AfterEach
     fun cleanDataTypes() {
-        dataTypeRepository.deleteAll()
+        DataType.deleteAll()
     }
 
     @Test
@@ -39,21 +35,21 @@ internal class DataTypeTest {
 
         dataType.persist()
 
-        val dataTypes = dataTypeRepository.findAll()
+        val dataTypes = DataType.findAll()
         assertEquals(1, dataTypes.count())
 
-        val res: DataType = dataTypes.firstResult()
+        val res: DataType = dataTypes.firstResult()!!
         assertEquals(dataType.name, res.name)
         assertEquals(dataType.description, res.description)
         assertEquals(dataType.unit, res.unit)
 
         res.name = "another test name"
         res.persist()
-        val newRes: DataType = dataTypeRepository.findById(res.id)
+        val newRes: DataType = DataType.findById(res.id)!!
         assertEquals(res.name, newRes.name)
 
         res.delete()
-        assertEquals(0, dataTypeRepository.count())
+        assertEquals(0, DataType.count())
     }
 
     @Test
@@ -61,13 +57,13 @@ internal class DataTypeTest {
         val dataType = sampleDataType()
         dataType.persist()
 
-        val res = dataTypeRepository.findByName(dataType.name)
+        val res = DataType.findByName(dataType.name)
         assertEquals(dataType.name, res?.name)
 
-        dataTypeRepository.deleteByName(dataType.name)
-        assertEquals(0, dataTypeRepository.count())
+        DataType.deleteByName(dataType.name)
+        assertEquals(0, DataType.count())
 
-        val empty = dataTypeRepository.findByName("nothing")
+        val empty = DataType.findByName("nothing")
         assertNull(empty)
     }
 

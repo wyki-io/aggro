@@ -5,7 +5,6 @@ import io.wyki.aggro.storage.entities.SampleEntities.sampleAsset
 import io.wyki.aggro.storage.entities.SampleEntities.sampleDataType
 import io.wyki.aggro.storage.entities.SampleEntities.sampleTag
 import io.wyki.aggro.storage.entities.SampleEntities.sampleTagValue
-import io.wyki.aggro.storage.repositories.DataTypeRepository
 import io.wyki.aggro.storage.repositories.TagRepository
 import io.wyki.aggro.storage.repositories.TagValueRepository
 import javax.inject.Inject
@@ -21,8 +20,6 @@ import org.junit.jupiter.api.Test
 internal class AssetTest {
 
     @Inject
-    lateinit var dataTypeRepository: DataTypeRepository
-    @Inject
     lateinit var tagRepository: TagRepository
     @Inject
     lateinit var tagValueRepository: TagValueRepository
@@ -32,7 +29,7 @@ internal class AssetTest {
         tagValueRepository.deleteAll()
         tagRepository.deleteAll()
         Asset.deleteAll()
-        dataTypeRepository.deleteAll()
+        DataType.deleteAll()
     }
 
     @Test
@@ -65,7 +62,7 @@ internal class AssetTest {
         assertEquals(0, Asset.count())
         assertEquals(0, tagValueRepository.count())
         assertEquals(1, tagRepository.count())
-        assertEquals(1, dataTypeRepository.count())
+        assertEquals(1, DataType.count())
     }
 
     @Test
@@ -77,7 +74,7 @@ internal class AssetTest {
         assertEquals(asset.name, res?.name)
 
         Asset.deleteByName(asset.name)
-        assertEquals(0, dataTypeRepository.count())
+        assertEquals(0, DataType.count())
 
         val empty = Asset.findByName("nothing")
         assertNull(empty)
@@ -92,14 +89,14 @@ internal class AssetTest {
         asset.persist()
 
         assertEquals(1, Asset.count())
-        assertEquals(1, dataTypeRepository.count())
+        assertEquals(1, DataType.count())
 
         val asset2 = sampleAsset("another asset")
         asset2.dataTypes.add(dataType)
         asset2.persist()
 
         assertEquals(2, Asset.count())
-        assertEquals(1, dataTypeRepository.count())
+        assertEquals(1, DataType.count())
     }
 
     @Test

@@ -4,25 +4,20 @@ import io.quarkus.test.junit.QuarkusTest
 import io.wyki.aggro.storage.entities.SampleEntities.sampleAsset
 import io.wyki.aggro.storage.entities.SampleEntities.sampleData
 import io.wyki.aggro.storage.entities.SampleEntities.sampleDataType
-import io.wyki.aggro.storage.repositories.DataTypeRepository
-import javax.inject.Inject
-import javax.transaction.Transactional
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import javax.transaction.Transactional
 
 @QuarkusTest
 @Transactional
 internal class DataTest {
 
-    @Inject
-    lateinit var dataTypeRepository: DataTypeRepository
-
     @AfterEach
     fun cleanDatabase() {
         Data.deleteAll()
         Asset.deleteAll()
-        dataTypeRepository.deleteAll()
+        DataType.deleteAll()
     }
 
     @Test
@@ -54,6 +49,6 @@ internal class DataTest {
         res.delete()
         assertEquals(0, Data.count())
         assertEquals(1, Asset.count())
-        assertEquals(1, dataTypeRepository.count())
+        assertEquals(1, DataType.count())
     }
 }

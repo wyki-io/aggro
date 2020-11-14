@@ -1,32 +1,29 @@
 package io.wyki.aggro.storage.entities
 
+import io.quarkus.hibernate.orm.panache.kotlin.PanacheCompanion
+import java.util.UUID
 import javax.persistence.Column
 import javax.persistence.Entity
 
 @Entity(name = "data_type")
-class DataType() : PanacheEntityUUID() {
+class DataType(
     @Column(
         nullable = false,
         unique = true
     )
-    var name: String = ""
-
+    var name: String = "",
     @Column(
         nullable = false,
         columnDefinition = "TEXT"
     )
-    var description: String = ""
-
+    var description: String = "",
     @Column(nullable = false)
     var unit: String = ""
+) : PanacheEntityUUID() {
 
-    constructor(
-        name: String = "",
-        description: String = "",
-        unit: String = ""
-    ) : this() {
-        this.name = name
-        this.description = description
-        this.unit = unit
+    companion object: PanacheCompanion<DataType, UUID> {
+        fun findByName(name: String): DataType? = find("name", name).firstResult()
+
+        fun deleteByName(name: String) = delete("name", name)
     }
 }

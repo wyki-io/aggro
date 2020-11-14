@@ -7,14 +7,13 @@ import io.wyki.aggro.storage.entities.DataType
 import java.time.ZonedDateTime
 import javax.transaction.Transactional
 import org.junit.jupiter.api.Tag
-import org.junit.jupiter.api.Test
 
 @QuarkusTest
 @Transactional
 @Tag("benchmark")
 class DataReadTest {
 
-    @Test
+//    @Test
     fun averagePerHour() {
         val dt = DataType.findByName(DataProvisioning.electricityConsumptionName)!!
         val asset = Asset.findByName(DataProvisioning.assetOneName)!!

@@ -11,7 +11,6 @@ import javax.inject.Inject
 import javax.transaction.Transactional
 import org.flywaydb.core.Flyway
 import org.junit.jupiter.api.Tag
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.fail
 
@@ -120,7 +119,7 @@ class DataProvisioning {
     //     flyway.migrate()
     // }
 
-    @Test
+//    @Test
     fun provisionData() {
         initDataTypes()
         initAsset()

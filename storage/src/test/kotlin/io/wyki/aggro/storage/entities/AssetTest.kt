@@ -27,14 +27,12 @@ internal class AssetTest {
     lateinit var tagRepository: TagRepository
     @Inject
     lateinit var tagValueRepository: TagValueRepository
-    @Inject
-    lateinit var assetRepository: AssetRepository
 
     @AfterEach
     fun cleanDatabase() {
         tagValueRepository.deleteAll()
         tagRepository.deleteAll()
-        assetRepository.deleteAll()
+        Asset.deleteAll()
         dataTypeRepository.deleteAll()
     }
 
@@ -49,9 +47,9 @@ internal class AssetTest {
         tagValue.persist()
 
         // Retrieve entity
-        val assets = assetRepository.findAll()
+        val assets = Asset.findAll()
         assertEquals(1, assets.count())
-        val res: Asset = assets.firstResult()
+        val res: Asset = assets.firstResult()!!
         assertEquals(asset.name, res.name)
         assertTrue(asset.tags.contains(tagValue))
         assertTrue(asset.dataTypes.contains(dataType))
@@ -59,13 +57,13 @@ internal class AssetTest {
         // Update entity
         res.name = "another asset name"
         res.persist()
-        val newRes: Asset = assetRepository.findById(res.id)
+        val newRes: Asset = Asset.findById(res.id)!!
         assertEquals(res.name, newRes.name)
 
         // Delete entity, validate propagation
-        assertEquals(1, assetRepository.count())
+        assertEquals(1, Asset.count())
         res.delete()
-        assertEquals(0, assetRepository.count())
+        assertEquals(0, Asset.count())
         assertEquals(0, tagValueRepository.count())
         assertEquals(1, tagRepository.count())
         assertEquals(1, dataTypeRepository.count())
@@ -76,13 +74,13 @@ internal class AssetTest {
         val asset = sampleAsset()
         asset.persist()
 
-        val res = assetRepository.findByName(asset.name)
+        val res = Asset.findByName(asset.name)
         assertEquals(asset.name, res?.name)
 
-        assetRepository.deleteByName(asset.name)
+        Asset.deleteByName(asset.name)
         assertEquals(0, dataTypeRepository.count())
 
-        val empty = assetRepository.findByName("nothing")
+        val empty = Asset.findByName("nothing")
         assertNull(empty)
     }
 
@@ -94,14 +92,14 @@ internal class AssetTest {
         asset.dataTypes.add(dataType)
         asset.persist()
 
-        assertEquals(1, assetRepository.count())
+        assertEquals(1, Asset.count())
         assertEquals(1, dataTypeRepository.count())
 
         val asset2 = sampleAsset("another asset")
         asset2.dataTypes.add(dataType)
         asset2.persist()
 
-        assertEquals(2, assetRepository.count())
+        assertEquals(2, Asset.count())
         assertEquals(1, dataTypeRepository.count())
     }
 
@@ -122,10 +120,10 @@ internal class AssetTest {
             asset.persist()
         }
 
-        assertEquals(10, assetRepository.findByDataType(dtDefault).size)
-        assertEquals(5, assetRepository.findByDataType(dtConsumption).size)
-        assertEquals(4, assetRepository.findByDataTypeName(dtProduction.name).size)
-        assertEquals(0, assetRepository.findByDataTypeName("nothing").size)
+        assertEquals(10, Asset.findByDataType(dtDefault).size)
+        assertEquals(5, Asset.findByDataType(dtConsumption).size)
+        assertEquals(4, Asset.findByDataTypeName(dtProduction.name).size)
+        assertEquals(0, Asset.findByDataTypeName("nothing").size)
     }
 
     @Test
@@ -144,9 +142,9 @@ internal class AssetTest {
             asset.persist()
         }
 
-        assertEquals(10, assetRepository.findByTag(location).size)
-        assertEquals(10, assetRepository.findByTagName(enabled.name).size)
-        assertEquals(5, assetRepository.findByTagAndValue(enabled, "true").size)
-        assertEquals(5, assetRepository.findByTagNameAndValue(enabled.name, "false").size)
+        assertEquals(10, Asset.findByTag(location).size)
+        assertEquals(10, Asset.findByTagName(enabled.name).size)
+        assertEquals(5, Asset.findByTagAndValue(enabled, "true").size)
+        assertEquals(5, Asset.findByTagNameAndValue(enabled.name, "false").size)
     }
 }

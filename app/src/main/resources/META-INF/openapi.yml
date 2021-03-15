@@ -12,6 +12,7 @@ servers:
   - url: http://localhost:8080
 tags:
   - name: Asset
+  - name: Group
   - name: Data
 paths:
   /assets:
@@ -186,7 +187,49 @@ paths:
           $ref: '#/components/responses/notFound'
         default:
           $ref: '#/components/responses/error'
-
+  
+  /groups:
+    get:
+      summary: List groups
+      operationId: listGroups
+      tags:
+        - Group
+      responses:
+        200:
+          description: 'Ok'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    name:
+                      type: string
+                    targets:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          type:
+                            type: string
+                            enum:
+                              - ASSET
+                              - GROUP
+                          id:
+                            type: string
+                            format: uuid
+                          name:
+                            type: string
+                          aggregation:
+                            type: string
+        404:
+          $ref: '#/components/responses/notFound'
+        default:
+          $ref: '#/components/responses/error'
   /dataTypes:
     get:
       summary: Returns a list of data types
